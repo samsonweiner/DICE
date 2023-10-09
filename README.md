@@ -1,7 +1,7 @@
-﻿# DICE
+﻿# DICE: Cell lineage reconstruction from single-cell CNA data
 
 ## **Description**
-DICE (Distance-based Inference of Copy-number Evolution) is a collection of simple and efficient methods for reconstructing cell lineage trees from single-cell copy number aberration data. Most notable among these methods are DICE-star and DICE-bar, which use the standard and breakpoint root distances, respectively, and reconstruct the phylogeny using a balanced minimum evolution criteria. Both approaches, and many variants, are implemented in a single Python file and can be easily run using a python interpreter. DICE can be cited as follows:
+DICE (short for Distance-based Inference of Copy-number Evolution) is a collection of fast and accurate methods for reconstructing cell lineage trees from single-cell copy number aberration data. Most notable among these methods are DICE-star and DICE-bar, which use standard-root and breakpoint-root distances, respectively, and reconstruct the phylogeny using a balanced minimum evolution criteria. DICE-star and DICE-bar have both been found to be generally more accurate and far more scalable than other, more complex, model-based approaches for reconstructing cell lineage trees from single-cell somatic copy number alteration data. Both approaches, and many variants, are implemented in a single Python file and can be easily run using a python interpreter. DICE can be cited as follows:
 
 <a>DICE: Fast and Accurate Distance-Based Reconstruction of Single-Cell Copy Number Phylogenies</a><br>
 Samson Weiner and Mukul S. Bansal<br>
