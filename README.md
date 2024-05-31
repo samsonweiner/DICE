@@ -87,6 +87,10 @@ Currently there are 4 distance measures available: manhattan, euclidean, log, an
 
 DICE makes available the four phylogenetic reconstruction algorithms implemented in fastme for computing a tree from a distance matrix. These are: balanced minimum evolution (balME), ordinary least-squares minimum evolution (olsME), neighbor-joining (NJ), and unweighted neigbor-joining (uNJ). For more information on these algorithms, see the fastme documentation.
 
+## Evaluations
+
+Scripts to run various methods used in the evaluations and instructions on their use are found in the *scripts* directory.
+
 
 ## Contact
 If there are any questions related to DICE, please contact Samson Weiner (<samson.weiner@uconn.edu>) or Mukul Bansal (<mukul.bansal@uconn.edu>), or visit <https://compbio.engr.uconn.edu/> for a complete list of available software and datasets.
