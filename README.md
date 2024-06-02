@@ -8,11 +8,32 @@ Samson Weiner and Mukul S. Bansal<br>
 Under review.
 
 ## Installation
-If on github, you can clone the this repository with
+<!-- 
+DICE can be installed automatically from Conda. It is best practice to install DICE into a new environment as follows:
+
+```
+conda create -n DICE python=3
+conda activate DICE
+
+conda install -c bioconda dice
+```
+
+Note that the environment must be activated before every session.
+-->
+
+### Manual Installation
+
+DICE can also be installed manually. First, clone this repository and cd into it with
 ```
 git clone https://github.com/samsonweiner/DICE.git
+cd DICE
 ```
-Otherwise, the source code can be downloaded at https://compbio.engr.uconn.edu/software/dice/.
+The source code can be downloaded at https://compbio.engr.uconn.edu/software/dice/.
+
+Next, install the dependencies listed below. Afterwords, run the setup script as follows:
+```
+python setup.py install
+```
 
 ### Dependencies
 
@@ -22,25 +43,16 @@ The following python packages are required to run the software:
 
 Additionally, DICE requires the [fastme](http://www.atgc-montpellier.fr/fastme/binaries.php) package. The easiest and recommended approach to install fastme is with `conda` (see [here](https://anaconda.org/bioconda/fastme)). Otherwise, users can download existing executables from the website. In this case, it is recommended that the executable be added to the user’s `$PATH` variable. 
 
-The commands used for a full install with `conda` following best practices are shown below.
-```
-conda create -n DICE python=3
-conda activate DICE
-
-conda install numpy
-conda install pandas
-conda install -c bioconda fastme
-```
 
 ## Usage
 
 Running DICE under default parameter settings will use the DICE-star method (standard root distance) and save the distance matrix to a file. The only required input is the path to the file containing the copy number profiles. To run DICE-star with the balanced ME phylogenetic reconstruction algorithm, use the command
 ```
-python3 DICE.py -i inputProfiles.tsv -o outputDir -m balME
+dice -i inputProfiles.tsv -o outputDir -m balME
 ```
 To run DICE-bar with balanced ME, use the same command with the `-b` flag:
 ```
-python3 DICE.py -i inputProfiles.tsv -o outputDir -m balME -b
+dice -i inputProfiles.tsv -o outputDir -m balME -b
 ```
 
 **Input File Format:** DICE** takes as input a single file (specified using the –i command line option) containing a tab-separated values (TSV) file describing the copy number profiles of all cells. The following headers are required for each file and should be placed on the first line: CELL (the cell id of the current row), chrom (the chromosome **X** of the current row in the form of **chrX**), start (the starting location in bp of the copy number bin), end (the ending location in bp of the copy number bin), CN states (the actual copy number of the bin in the current row). If total copy numbers are used, the value of CN states should be a single numerical value. If allele-specific copy numbers are used, the value of CN states should be **a,b** where **a** is the copy number for haplotype A, and **b** is the copy number for haplotype B.

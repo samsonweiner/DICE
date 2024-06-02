@@ -116,14 +116,33 @@ def construct_tree_fast(file_name, save_dm, tree_prefix, method, use_NNI, fastme
     if not save_dm:
         os.remove(file_name)
 
-metrics = {
-    'manhattan': distance_manhattan,
-    'euclidean': distance_euclidean,
-    'root': distance_root,
-    'log': distance_log
-}
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--input', type=str, required=True, help='Path to dataset.')
+    parser.add_argument('-o', '--output', type=str, default=None, help='Output directory. Will create one if it does not exist. Default is current directory.')
+    parser.add_argument('-p', '--prefix', type=str, default=None, help='Prefix to add to output files.')
+    parser.add_argument('-s', '--save-dm', action='store_true', help='Toggle to save the distance matrix to a file.')
+    parser.add_argument('-b', '--breakpoint', action='store_true', help='Toggle to use breakpoint profiles.')
+    parser.add_argument('-t', '--total-cn', action='store_true', help='Use total copy numbers instead of allele-specific copy numbers.')
+    parser.add_argument('-d', '--dist-type', type=str, default='root', help='Distance measure type.')
+    parser.add_argument('-m', '--rec-method', type=str, default=None, help='Phylogenetic reconstruction algorithm. If not specified, will compute the distance matrix and save to a file. Options are \'fastNJ\', \'fastuNJ\', \'balME\', \'olsME\'.')
+    parser.add_argument('-n', '--use-NNI', action='store_true', help='For ME methods, toggle to use NNI tree search. By default, SPR tree search is used.')
+    parser.add_argument('-f', '--fastme-path', type=str, default='fastme', help='Path to \'fastme\' executable. By default, assumes the fastme executable is added to the user $PATH and is called directly.')
+    parser.add_argument('-z', '--seed', type=int, default=None, help='Randomization seed used in fastme.')
+    args = parser.parse_args()
+    return args
 
-def main(in_path, out_path, prefix, save_dm, rec_method, use_breakpoint, dist_type, use_total, use_NNI, fastme_path, seed):
+def main():
+    args = parse_args()
+    in_path, out_path, prefix, save_dm, rec_method, use_breakpoint, dist_type, use_total, use_NNI, fastme_path, seed = args.input, args.output, args.prefix, args.save_dm, args.rec_method, args.breakpoint, args.dist_type, args.total_cn, args.use_NNI, args.fastme_path, args.seed
+
+    metrics = {
+        'manhattan': distance_manhattan,
+        'euclidean': distance_euclidean,
+        'root': distance_root,
+        'log': distance_log
+    }
+
     start_time = time.time()
     part1_time = part2_time = part3_time = None
 
@@ -202,20 +221,5 @@ def main(in_path, out_path, prefix, save_dm, rec_method, use_breakpoint, dist_ty
         f2.close()
         os.remove(dm_prefix + '_fastme_stat.txt')
 
-
-parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--input', type=str, required=True, help='Path to dataset.')
-parser.add_argument('-o', '--output', type=str, default=None, help='Output directory. Will create one if it does not exist. Default is current directory.')
-parser.add_argument('-p', '--prefix', type=str, default=None, help='Prefix to add to output files.')
-parser.add_argument('-s', '--save-dm', action='store_true', help='Toggle to save the distance matrix to a file.')
-parser.add_argument('-b', '--breakpoint', action='store_true', help='Toggle to use breakpoint profiles.')
-parser.add_argument('-t', '--total-cn', action='store_true', help='Use total copy numbers instead of allele-specific copy numbers.')
-parser.add_argument('-d', '--dist-type', type=str, default='root', help='Distance measure type.')
-parser.add_argument('-m', '--rec-method', type=str, default=None, help='Phylogenetic reconstruction algorithm. If not specified, will compute the distance matrix and save to a file. Options are \'fastNJ\', \'fastuNJ\', \'balME\', \'olsME\'.')
-parser.add_argument('-n', '--use-NNI', action='store_true', help='For ME methods, toggle to use NNI tree search. By default, SPR tree search is used.')
-parser.add_argument('-f', '--fastme-path', type=str, default='fastme', help='Path to \'fastme\' executable. By default, assumes the fastme executable is added to the user $PATH and is called directly.')
-parser.add_argument('-z', '--seed', type=int, default=None, help='Randomization seed used in fastme.')
-args = parser.parse_args()
-
 if __name__ == '__main__':
-    main(args.input, args.output, args.prefix, args.save_dm, args.rec_method, args.breakpoint, args.dist_type, args.total_cn, args.use_NNI, args.fastme_path, args.seed)
+    main()
