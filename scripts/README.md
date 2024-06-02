@@ -1,6 +1,6 @@
 # Evaluation scripts
 
-The `execute.py` script calls functions located in `utilities.py` to execute the methods used in the DICE evaluations. Running the scripts to evaluate external methods requires they are installed. It also requires the following python packages: ete3, skbio. The scripts take as input the copy number profiles in the same format as DICE, and automatically applies transformations so the data is in the correct format to run each method.
+The `execute.py` script calls functions located in `utilities.py` to execute the methods used in the DICE evaluations. It requires the following additional python packages: ete3, skbio. Running the scripts to evaluate external methods requires they be installed. The path to each installed method can be specified at the top of the `execute.py` script. It takes as input the copy number profiles in the same format as DICE, and automatically applies transformations so the data is in the correct format to run each method.
 
 The options are as follows:
 
