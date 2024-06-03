@@ -1,6 +1,6 @@
 # Evaluation scripts
 
-The `execute.py` script calls functions located in `utilities.py` to execute the methods used in the DICE evaluations. It requires the following additional python packages: ete3, skbio. Running the scripts to evaluate external methods requires they be installed. The path to each installed method can be specified at the top of the `execute.py` script. It takes as input the copy number profiles in the same format as DICE, and automatically applies transformations so the data is in the correct format to run each method.
+Scripts are provided to execute the methods used in the DICE evaluation, including [DICE](https://github.com/samsonweiner/DICE), [MEDICC2](https://bitbucket.org/schwarzlab/medicc2/src), [MEDALT](https://github.com/KChen-lab/MEDALT), [cnp2cnp](https://github.com/AEVO-lab/cnp2cnp), [sitka](https://github.com/UBC-Stat-ML/sitkatree), and [lazac](https://github.com/raphael-group/lazac-copy-number). The `execute.py` script calls functions located in `utilities.py` to run these methods. Using the scripts requires the following additional python packages: ete3, skbio. Additionally, the external methods must be installed. The path to each installed method can be specified at the top of the `execute.py` script. It takes as input the copy number profiles in the same format as DICE, and automatically applies transformations to the input data to match the required format necessary for running each method.
 
 The options are as follows:
 
