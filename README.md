@@ -8,7 +8,6 @@ Samson Weiner and Mukul S. Bansal<br>
 Under review.
 
 ## Installation
-<!-- 
 DICE can be installed automatically from Conda. It is best practice to install DICE into a new environment as follows:
 
 ```
@@ -19,7 +18,6 @@ conda install -c bioconda dice
 ```
 
 Note that the environment must be activated before every session.
--->
 
 ### Manual Installation
 
