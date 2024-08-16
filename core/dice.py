@@ -96,9 +96,9 @@ def save_distmatrix(dist_matrix, cell_names, file_name):
 
 # Build the tree using the balanced ME of fastme
 def construct_tree_fast(file_name, save_dm, tree_prefix, method, use_NNI, fastme_path, seed):
-    if method == 'fastNJ':
+    if method == 'NJ':
         flags = ['N']
-    elif method == 'fastuNJ':
+    elif method == 'uNJ':
         flags = ['U']
     elif method == 'balME':
         if use_NNI:
@@ -124,8 +124,8 @@ def parse_args():
     parser.add_argument('-s', '--save-dm', action='store_true', help='Toggle to save the distance matrix to a file.')
     parser.add_argument('-b', '--breakpoint', action='store_true', help='Toggle to use breakpoint profiles.')
     parser.add_argument('-t', '--total-cn', action='store_true', help='Use total copy numbers instead of allele-specific copy numbers.')
-    parser.add_argument('-d', '--dist-type', type=str, default='root', help='Distance measure type.')
-    parser.add_argument('-m', '--rec-method', type=str, default=None, help='Phylogenetic reconstruction algorithm. If not specified, will compute the distance matrix and save to a file. Options are \'fastNJ\', \'fastuNJ\', \'balME\', \'olsME\'.')
+    parser.add_argument('-d', '--dist-type', type=str, default='root', help='Distance measure type. Options are \'root\', \'log\', \'manhattan\', and \'euclidean\'. Defaults to root.')
+    parser.add_argument('-m', '--rec-method', type=str, default=None, help='Phylogenetic reconstruction algorithm. If not specified, will compute the distance matrix and save to a file. Options are \'NJ\', \'uNJ\', \'balME\', and \'olsME\'.')
     parser.add_argument('-n', '--use-NNI', action='store_true', help='For ME methods, toggle to use NNI tree search. By default, SPR tree search is used.')
     parser.add_argument('-f', '--fastme-path', type=str, default='fastme', help='Path to \'fastme\' executable. By default, assumes the fastme executable is added to the user $PATH and is called directly.')
     parser.add_argument('-z', '--seed', type=int, default=None, help='Randomization seed used in fastme.')
@@ -151,7 +151,16 @@ def main():
     if not os.path.isdir(out_path):
         os.makedirs(out_path)
     if dist_type not in list(metrics.keys()):
-        print('Invalid distance type.')
+        print('Invalid distance type. Please select among \'root\', \'log\', \'manhattan\', \'euclidean\'.')
+        return
+
+    rec_methods = ['NJ', 'uNJ', 'balME', 'olsME']
+    if rec_method is not None and rec_method not in rec_methods:
+        print('Invalid phylogenetic reconstruction method. Please select among \'NJ\', \'uNJ\', \'balME\', \'olsME\'.')
+        return
+    
+    if not os.path.exists(in_path):
+        print('Cannot find file at specified path.')
         return
     
     if not prefix:
@@ -183,13 +192,9 @@ def main():
         part1_time = start_time
     if rec_method:
         print('Constructing tree...', end="", flush=True)
-        if rec_method in ['NJ', 'uNJ', 'balME', 'olsME']:
-            tree_prefix = os.path.join(out_path, prefix + '_tree.nwk')
-            construct_tree_fast(dm_prefix, save_dm, tree_prefix, rec_method, use_NNI, fastme_path, seed)
-            part3_time = time.time()
-        else:
-            print('Invalid reconstruction method.')
-            return
+        tree_prefix = os.path.join(out_path, prefix + '_tree.nwk')
+        construct_tree_fast(dm_prefix, save_dm, tree_prefix, rec_method, use_NNI, fastme_path, seed)
+        part3_time = time.time()
     print('Done')
 
     info_prefix = os.path.join(out_path, prefix + '_info.txt')
