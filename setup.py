@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='DICE',
-    version='1.0.0',
+    version='1.1.0',
     author='Samson Weiner',
     author_email='samson.weiner@uconn.edu',
     description='DICE (short for Distance-based Inference of Copy-number Evolution) is a collection of fast and accurate methods for reconstructing cell lineage trees from single-cell copy number aberration data.',
